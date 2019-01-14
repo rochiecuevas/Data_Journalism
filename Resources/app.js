@@ -91,12 +91,12 @@ function updateToolTip(chosenXAxis, circlesGroup){
 };
 
 
-// Import data
+// 6. Import data
 d3.csv("Resources/data.csv", function(error, data){
     if (error) throw error;
     console.log(data);
 
-    // Convert numerical data from string to float
+    // 6a. Convert numerical data from string to float
     data.forEach(function(data){
         data.poverty = +data.poverty;
         data.povertyMoe = +data.povertyMoe;
@@ -109,5 +109,11 @@ d3.csv("Resources/data.csv", function(error, data){
         data.smokes = +data.smokes;
     });
 
-    // Define the x-axis
+    // 6b. Use the xScale function to update the x-axis depending on the chosen x-axis label
+    var xLinearScale = xScale(data, chosenXAxis);
+
+    // 6c. Create a y-scale function
+    var yLinearScale = d3.scaleLinear()
+                         .domain([d3.min(data, d => d.noHealthInsurance), d3.max(data, d => d.noHealthInsurance)])
+                         .range(height, 0);
 });
