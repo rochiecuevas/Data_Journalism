@@ -130,12 +130,4 @@ d3.csv("Resources/data.csv", function(error, data){
         .attr("transform", `translate(${width / 3}, ${height + margins.top})`)
         .attr("class", "axisText")
         .text("Proportion of People in Poverty (%)");    
-
-    // Create labels inside the circles
-    // circlesGroup.append("text")
-    //     .attr("dx", 12)
-    //     .classed("circle-text", true)
-    //     .text(function(d){
-    //         return d.abbr
-    //     })
 });
