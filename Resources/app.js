@@ -116,4 +116,54 @@ d3.csv("Resources/data.csv", function(error, data){
     var yLinearScale = d3.scaleLinear()
                          .domain([d3.min(data, d => d.noHealthInsurance), d3.max(data, d => d.noHealthInsurance)])
                          .range(height, 0);
+
+    // 6d. Set the axis functions
+    var bottomAxis = d3.axisBottom(xLinearScale);
+    var leftAxis = d3.axisLeft(yLinearScale);
+
+    // 6e. Append an x-axis
+    var xAxis = chartGroup.append("g")
+                          .classed("x-axis", true)
+                          .attr("transform", `translate(0, ${height})`)
+                          .call(bottomAxis);
+                
+    // 6f. Append a y-axis
+    chartGroup.append("g")
+              .call(leftAxis);
+    
+    // 6g. Append initial circles
+    var circlesGroup = chartGroup.selectAll("circle")
+                                 .data(data)
+                                 .enter()
+                                 .append("circle")
+                                 .attr("cx", d => xLinearScale(d[chosenXAxis]))
+                                 .attr("cy", d => yLinearScale(d.noHealthInsurance))
+                                 .attr("r", 20)
+                                 .attr("fill", "green")
+                                 .attr("opacity", 0.75);
+
+    // 6h. Create a group containing three x-axis labels
+    var xlabelsGroup = chartGroup.append("g")
+                                 .attr("transform", `translate(${width / 2}, ${height + 20})`);
+
+    var povertyLabel = xlabelsGroup.append("text")
+                                   .attr("x", 0)
+                                   .attr("y", 20)
+                                   .attr("value", "poverty")
+                                   .classed("active", true)
+                                   .text("Below Poverty Level (%)");
+
+    var ageLabel = xlabelsGroup.append("text")
+                                   .attr("x", 0)
+                                   .attr("y", 20)
+                                   .attr("value", "age")
+                                   .classed("active", true)
+                                   .text("Median Age (yrs)");
+
+    var incomeLabel = xlabelsGroup.append("text")
+                               .attr("x", 0)
+                               .attr("y", 20)
+                               .attr("value", "age")
+                               .classed("active", true)
+                               .text("Median Household Income (USD)");
 });
