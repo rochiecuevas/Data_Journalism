@@ -9,15 +9,11 @@ var margins = {
     left: 40
 };
 
-console.log(margins);
-
 var width = svgWidth - margins.left - margins.right;
 var height = svgHeight - margins.top - margins.bottom;
 
-console.log(`Width: ${width}; Height: ${height}`);
-
 // Add the SVG object in the HTML
-var svg = d3.select(".svg-spot")
+var svg = d3.select("#svg-spot") // "svg-spot" is a div id hence the pound sign
             .append("svg")
             .attr("width", svgWidth)
             .attr("height", svgHeight);
@@ -30,16 +26,18 @@ var chartGroup = svg.append("g")
 
 // 1. Default chosen x-axis
 var chosenXAxis = "poverty";
+console.log(chosenXAxis);
 
 // 2. Define a function that updates the x-axis upon clicking a label
 function xScale(data, chosenXAxis){
 
     // create scales
     var xLinearScale = d3.scaleLinear()
-                         .domain([d3.min(d => d[chosenXAxis]), d3.max(d => d[chosenXAxis])])
+                         .domain([d3.min(data, d => d[chosenXAxis]), d3.max(data, d => d[chosenXAxis])])
                          .range([0, width]);
 
     return xLinearScale;
+    
 };
 
 // 3. Define a function that updates the x-axis when an x-axis label is chosen
@@ -63,7 +61,7 @@ function renderCircles(circlesGroup, newXAxis, chosenXAxis){
     return circlesGroup;
 };
 
-// 5. Define a function that updates the tooltip to each circle
+// // 5. Define a function that updates the tooltip to each circle
 function updateToolTip(chosenXAxis, circlesGroup){
     if (chosenXAxis === "poverty"){
         var label = "Below Poverty Line (%):"
@@ -73,23 +71,22 @@ function updateToolTip(chosenXAxis, circlesGroup){
         var label = "Median Household Income (USD):"
     };
 
-    var toolTip = d3.tip()
-                    .attr("class", "tooltip")
-                    .offset([80,-60])
-                    .html(function(d){
-                        return (`${d.state} <hr> ${label} ${d[chosenXAxis]}`);
-                    });
-    
-    circlesGroup.call(toolTip);
+    var toolTip = d3.select("body")
+                    .append("div")
+                    .attr("class", "tooltip");
 
     // Show the tooltip when the mouse is over the circle
-    circlesGroup.on("mouseover", function(data){
-        toolTip.show(data);
+    circlesGroup.on("mouseover", function(data, i){
+        toolTip.style("display", "block");
+        toolTip.html(`${data.state[i]}<hr>${label} ${data.poverty[i]}`)
+               .style("left", d3.event.pageX + "px")
+               .style("top", d3.event.pageY + "px");
     })
-    // Tooltip is hidden when the mouse moves away from the circle
-                .on("mouseout", function(data){
-                    toolTip.hide(data);
-                });
+
+    // Tooltip is hidden once the mouse is moved
+            .on("mouseout", function(){
+                toolTip.style("display", "none");
+            });
     
     return circlesGroup;
 };
@@ -242,5 +239,5 @@ d3.csv("Resources/data.csv", function(error, data){
                         }
                     }
 
-                })
+                });
 });
