@@ -31,6 +31,7 @@ d3.csv("Resources/data.csv", function(error, data){
     console.log(data);
 
     // Convert the numbers from strings to floats
+    // I chose to plot poverty vs obesity
     data.forEach(function(d){
         d.poverty = +d.poverty;
         // d.age = +d.age;
@@ -65,16 +66,38 @@ d3.csv("Resources/data.csv", function(error, data){
               .attr("transform", `translate(0,${height})`)
               .call(bottomAxis);
 
-    // Create circles that will correspond to the data points (scatter plot)
+    // Create a group of circles that will contain the data points (scatter plot)
     var circlesGroup = chartGroup.selectAll("circle")
-                                 .data(data)
-                                 .enter()
-                                 .append("circle")
-                                 .attr("cx", d => xPovertyScale(d.poverty))
-                                 .attr("cy", d => yObesityScale(d.obesity))
-                                 .attr("fill", "green")
-                                 .attr("r", "10")
-                                 .attr("opacity", "0.5");
+        .data(data)
+        .enter()
+        .append("g")
+        .classed("element-group", true);
+    
+    // Create a circle that will correspond to each data point
+    circlesGroup.append("circle")
+        .attr("cx", d => xPovertyScale(d.poverty))
+        .attr("cy", d => yObesityScale(d.obesity))
+        .attr("fill", "green")
+        .attr("r", "10")
+        .attr("opacity", "0.5")
+        .classed("circle", true);
+
+    // At the same level (not nested), create text that will correspond to the abbreviations of the state names
+    circlesGroup.append("text")
+        .style("text-anchor", "middle")
+
+        // coordinates of the text match those of the circles
+        .attr("x", d => xPovertyScale(d.poverty)) 
+        .attr("y", d => yObesityScale(d.obesity))
+
+        // "dy" is offset on the y-axis
+        .attr("dy", ".3em")
+
+        // the text comes from the abbr column of the csv file
+        .text(function(d){
+            return d.abbr
+        })
+        .classed("circle-text", true);    
 
     // Create tooltips
     var toolTips = d3.tip()
@@ -107,4 +130,12 @@ d3.csv("Resources/data.csv", function(error, data){
         .attr("transform", `translate(${width / 3}, ${height + margins.top})`)
         .attr("class", "axisText")
         .text("Proportion of People in Poverty (%)");    
+
+    // Create labels inside the circles
+    // circlesGroup.append("text")
+    //     .attr("dx", 12)
+    //     .classed("circle-text", true)
+    //     .text(function(d){
+    //         return d.abbr
+    //     })
 });
