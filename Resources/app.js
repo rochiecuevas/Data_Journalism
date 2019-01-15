@@ -9,8 +9,12 @@ var margins = {
     left: 40
 };
 
+console.log(margins);
+
 var width = svgWidth - margins.left - margins.right;
 var height = svgHeight - margins.top - margins.bottom;
+
+console.log(`Width: ${width}; Height: ${height}`);
 
 // Add the SVG object in the HTML
 var svg = d3.select(".svg-spot")
@@ -161,9 +165,82 @@ d3.csv("Resources/data.csv", function(error, data){
                                    .text("Median Age (yrs)");
 
     var incomeLabel = xlabelsGroup.append("text")
-                               .attr("x", 0)
-                               .attr("y", 20)
-                               .attr("value", "age")
-                               .classed("active", true)
-                               .text("Median Household Income (USD)");
+                                  .attr("x", 0)
+                                  .attr("y", 20)
+                                  .attr("value", "income")
+                                  .classed("active", true)
+                                  .text("Median Household Income (USD)");
+
+    // 6i. Append the y-axis
+    chartGroup.append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 0 - margins.left)  
+              .attr("x", 0 - (height / 2))
+              .attr("dy", "1em")
+              .classed("axis-text", true)
+              .text("No Health Insurance (%)");
+        
+    // 6j. Use updateToolTip to update circles
+    var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+    // 6k. Add an event listener so that something happens when an x-axis label is chosen
+    xlabelsGroup.selectAll("text")
+                .on("click", function(){
+
+                    // Get the value of the selection (x-axis label)
+                    var xSelection = d3.select(this).attr("value");
+
+                    if (value !== chosenXAxis){
+
+                        // Replace chosenXAxis with value (x-axis label)
+                        chosenXAxis == xSelection;
+                        console.log(chosenXAxis);
+
+                        // Update the x-axis scale for the new x-axis values
+                        xLinearScale = xScale(data, chosenXAxis);
+
+                        // Update x-axis with transition
+                        xAxis = renderAxis(xLinearScale, xAxis);
+
+                        // Update circles based on new x-axis values
+                        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+                        // Update tooltips based on chosen x-axis label
+                        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+                        // Make the selected x-axis bold font
+                        if (chosenXAxis === "poverty"){
+                            povertyLabel
+                                .classed("active", true)
+                                .classed("inactive", false);
+                            ageLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                            incomeLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                        } else if (chosenXAxis === "age"){
+                            povertyLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                            ageLabel
+                                .classed("active", true)
+                                .classed("inactive", false);
+                            incomeLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                        } else if (chosenXAxis === "income"){
+                            povertyLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                            ageLabel
+                                .classed("active", false)
+                                .classed("inactive", true);
+                            incomeLabel
+                                .classed("active", true)
+                                .classed("inactive", false);
+                        }
+                    }
+
+                })
 });
