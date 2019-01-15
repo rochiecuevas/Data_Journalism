@@ -16,3 +16,8 @@
     font-weight: normal;
     fill: grey;
 }
+
+.circle-text {
+    font-weight: bold;
+    font-size: 9px;
+}
