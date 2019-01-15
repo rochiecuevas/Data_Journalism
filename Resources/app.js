@@ -288,6 +288,39 @@ d3.csv("Resources/data.csv", function(error, data){
             if (yValue !== chosenYAxis){
                 chosenYAxis = yValue;
                 console.log(chosenYAxis);
+
+                // Change the font style of the selected x-axis label
+                if (chosenYAxis === "obesity"){
+                    obesityLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    noInsuranceLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    smokingLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                } else if (chosenYAxis === "noHealthInsurance"){
+                    obesityLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    noInsuranceLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                    smokingLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                } else if (chosenYAxis === "smokes"){
+                    obesityLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    noInsuranceLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    smokingLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                }
             }
         })
 });
