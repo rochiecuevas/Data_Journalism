@@ -5,7 +5,7 @@ var svgWidth = 1000;
 var margins = {
     top: 40,
     right: 40,
-    bottom: 60,
+    bottom: 100,
     left: 40
 };
 
@@ -75,6 +75,7 @@ d3.csv("Resources/data.csv", function(error, data){
                                  .attr("fill", "green")
                                  .attr("r", "10")
                                  .attr("opacity", "0.75");
+                    
 
     // Create tooltips
     var toolTips = d3.tip()
@@ -94,17 +95,53 @@ d3.csv("Resources/data.csv", function(error, data){
             toolTips.hide(data);
         });
 
-    // Create axis labels
-    chartGroup.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - (margins.left + 25))
-        .attr("x", 0 - (height - 60))
-        .attr("dy", "1em")
-        .attr("class", "axisText")
-        .text("Proportion of Obese People in the Population (%)");
+    // Create group of y-axis labels
+    var yLabels = chartGroup.append("g")
+                            .attr("transform", "rotate(-90)");
 
-    chartGroup.append("text")
-        .attr("transform", `translate(${width / 3}, ${height + margins.top})`)
-        .attr("class", "axisText")
-        .text("Proportion of People in Poverty (%)");    
+    var obesityLabel = yLabels.append("text")
+        .attr("y", 0 - (margins.left + 25))
+        .attr("x", 0 - (height - 20))
+        .attr("dy", "1em")
+        .classed("active", true)
+        .text("Proportion of Obese People (%)");
+
+    var noInsuranceLabel = yLabels.append("text")
+        .attr("y", 0 - (margins.left + 45))
+        .attr("x", 0 - (height - 20))
+        .attr("dy", "1em")
+        .classed("inactive", true)
+        .text("Proportion of People Without Insurance (%)");
+
+    var smokingLabel = yLabels.append("text")
+        .attr("y", 0 - (margins.left + 65))
+        .attr("x", 0 - (height - 20))
+        .attr("dy", "1em")
+        .classed("inactive", true)
+        .text("Proportion of Smokers (%)");
+
+    // Create group of x-axis labels
+    var xLabels = chartGroup.append("g")
+        .attr("transform", `translate(${width / 3}, ${height + margins.top})`);
+
+    var povertyLabel = xLabels.append("text")
+        .attr("x", 0)
+        .attr("y", 10)
+        .attr("value", "poverty") // value for event listener
+        .classed("active", true)
+        .text("Proportion of People in Poverty (%)");
+        
+    var ageLabel = xLabels.append("text")
+        .attr("x", 0)
+        .attr("y", 30)
+        .attr("value", "age") // value for event listener
+        .classed("inactive", true)
+        .text("Median Age (years)");    
+
+    var incomeLabel = xLabels.append("text")
+        .attr("x", 0)
+        .attr("y", 50)
+        .attr("value", "income") // value for event listener
+        .classed("inactive", true)
+        .text("Median Household Income (USD)");    
 });
