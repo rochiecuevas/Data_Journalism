@@ -9,3 +9,4 @@ This project explores the relationships among three sociodemographic indicators 
 |Resources/[app.js](https://github.com/rochiecuevas/Data_Journalism/blob/master/Resources/app.js)|contains code that runs the static graph (poverty vs obesity)
 |Resources/[app2.js](https://github.com/rochiecuevas/Data_Journalism/blob/master/Resources/app2.js)|contains code that runs the interactive graph (three variables assigned to the x- and the y-axis each)
 
+Check out the project [wiki section](https://github.com/rochiecuevas/Data_Journalism/wiki) for details on how the graph became alive.
