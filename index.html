@@ -18,13 +18,32 @@
     <title>Health and SECs</title>
 </head>
 <body>
-    <div class = "container">
-        <div class = "row">
-            <h3>Relationship between poverty and obesity</h3>
-            <!-- Insert chart here -->
-            <div id = "svg-spot"></div>
+    <!-- Hero section -->
+    <section class = "hero" id = "hero">
+        <div class = "hero-inner">
+            <h1>Health and sociodemographics</h1>
+            <br>
+            <p>Being a member of a sociodemographic group is linked with certain health risks. Let's explore the relationships among income, poverty, and age with obesity, smoking, and health insurance coverage across U.S.A. states.</p>
+            <a href = "#scatterplot" class = "btn">Start exploring</a>
         </div>
-    </div>
+    </section>
+    
+    <!-- Graphics section -->
+    <section id = "scatterplot">
+        <div class = "container">
+            <div class = "row">
+                <!-- Insert interactive scatter plot here -->
+                <div class = "col-md-8">
+                    <div id = "svg-scatter"></div>
+                </div>
+                <!-- Insert descriptions here -->
+                <div class = "col-md-4">
+                    <p>Hello!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
 
     <!-- JS script for static graph -->
     <!-- <script type = "text/javascript" src = "Resources/app.js"></script> -->
