@@ -1,3 +1,75 @@
+/* Formatting */
+
+.hero {
+    /* Sizing */
+    width: 100vw;
+    height: 100vh;
+
+    /* Flexbox centring */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Text styles */
+    text-align: center;
+    color: white;
+
+    /* Background image */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/Resources/meal.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero h1 {
+    /* Text styling */
+    font-size: 5em;
+
+    /* Margins */
+    top: 0;
+    margin-bottom: 0.5em;
+}
+
+.hero p {
+    /* Text style */
+    font-size: 1.5em;
+}
+
+.hero .btn {
+    /* Positioning and blocking */
+    display: inline-block;
+    width: 200px;
+
+    /* Border style */
+    border: 2px solid lightgray;
+    border-radius: 10px;
+
+    /* Background style */
+    background-color: black;
+
+    /* Padding and margins */
+    padding: 1em;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* Text styles */
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.hero .btn:hover {
+    /* Background styling */
+    background-color: floralwhite;
+
+    /* Border styling */
+    border: 2px solid dimgrey;
+    border-radius: 10px;
+}
+
 .tooltip {
     color: white;
     background: rgb(39, 39, 39);
