@@ -384,4 +384,8 @@ var incomeLabel = xLabels.append("text")
     });
 });
 
+// Descriptions
+var descriptions = d3.select("#insights")
+  .html("The data visualised here is based on the results of the 2014 American Community Survey (ACS) 1-year estimates.<br><br><b>Obesity Rate</b><br><i>Poverty</i> and <i>obesity</i> appear to be positively correlated. <i>Income</i> is naturally negatively correlated with <i>obesity</i>. <i>Age</i>, on the other hand, is not correlated with <i>obesity</i>.<br><br><b>Proportion of Smokers</b><br><i>Smoking</i> is positively correlated with <i>poverty</i> and negatively correlated with <i>income</i>. There is no obvious trends between <i>age</i> and the proportion of <i>smokers</i>.<br><br><b>People Without Health Insurance</b><br>There appears to be a positive correlation between <i>poverty</i> and <i>insurance coverage</i> and a negative correlation between <i>income</i> and <i>insurance coverage</i>. No trends can be observed between <i>insurance coverage</i> and <i>age</i>.");  
+
 
